@@ -4,6 +4,7 @@
 // ===================================================================
 
 var express = require('express');
+var load 	= require('express-load');
 var path 	= require('path');
 var app		= express();
 
@@ -23,8 +24,12 @@ app.set('view options', { layout: 'layouts/master' });
 // ROUTING
 // ===================================================================
 
-var router = require('./router');
-router.Route(app, express);
+load('./models')
+	.then('./controllers')
+	.then('./routes')
+	.into(app);
+
+app.routes.router.routes.all(app, express);
 
 // START SERVER
 // ===================================================================
