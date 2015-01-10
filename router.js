@@ -4,11 +4,9 @@ module.exports = exports = {
 		main: function (app, express)
 		{
 			var router = express.Router();
+			var homeController = require('./controllers/home');
 
-			router.get('/', function (req, res)
-			{
-				res.render('home');
-			});
+			router.get('/', homeController.index);
 
 			app.use('/', router);
 		}, 
