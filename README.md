@@ -27,7 +27,7 @@ Routes are all automatically mapped to their corresponding Controllers/Actions.
 ```javascript
 // home.js
 module.exports = {
-  // access via GET request to /home/Index
+  // access via GET request to /home/Index or /home
   getIndex: function (req, res)
   {
     res.send('Hello, World!');
