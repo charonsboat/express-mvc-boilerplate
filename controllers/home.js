@@ -4,6 +4,11 @@ module.exports = {
 		res.render('home');
 	}, 
 
+	postIndex: function (req, res)
+	{
+		res.send('posted!');
+	}, 
+
 	getTest: function (req, res)
 	{
 		res.send('testing!');

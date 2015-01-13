@@ -29,7 +29,7 @@ load('./models')
 	.then('./routes')
 	.into(app);
 
-app.routes.router.routes.all(app, express);
+app.routes.router.autoRoute(app, express);
 
 // START SERVER
 // ===================================================================

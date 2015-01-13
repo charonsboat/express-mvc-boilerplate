@@ -1,76 +1,80 @@
 // Auto-Routes Urls to matching Controllers/Actions. It IS case sensitive at the 
 // moment, but I am working on fixing that.
 
-module.exports = function (app, express)
-{
-	var autoRouter = express.Router();
-
-	autoRouter.get('/', app.controllers.home.getIndex);
-
-	autoRouter.all('/:controller', function (req, res)
+var router = {
+	autoRoute: function (app, express)
 	{
-		var method = req.method.toLowerCase();
-		var controller = app.controllers[req.params.controller];
+		var autoRouter = express.Router();
 
-		if (controller != null)
+		autoRouter.get('/', app.controllers.home.getIndex);
+
+		autoRouter.all('/:controller', function (req, res)
 		{
-			controller[method + 'Index'](req, res);
-		}
-		else
-		{
-			// 404
-		}
-	});
+			var method = req.method.toLowerCase();
+			var controller = app.controllers[req.params.controller];
 
-	autoRouter.all('/:controller/:action', function (req, res)
-	{
-		var method = req.method.toLowerCase();
-		var controller = app.controllers[req.params.controller];
-
-		if (controller != null)
-		{
-			var action = controller[method + req.params.action];
-
-			if (action != null)
+			if (controller != null)
 			{
-				action(req, res);
+				controller[method + 'Index'](req, res);
 			}
 			else
 			{
-				// 404 or redirect to Index
+				// 404
 			}
-		}
-		else
+		});
+
+		autoRouter.all('/:controller/:action', function (req, res)
 		{
-			// 404
-		}
-	});
+			var method = req.method.toLowerCase();
+			var controller = app.controllers[req.params.controller];
 
-	autoRouter.all('/:controller/:action/:id', function (req, res)
-	{
-		var method = req.method.toLowerCase();
-		var controller = app.controllers[req.params.controller];
-
-		if (controller != null)
-		{
-			var action = controller[method + req.params.action];
-
-			if (action != null)
+			if (controller != null)
 			{
-				action(req, res);
+				var action = controller[method + req.params.action];
+
+				if (action != null)
+				{
+					action(req, res);
+				}
+				else
+				{
+					// 404 or redirect to Index
+				}
 			}
 			else
 			{
-				// 404 or redirect to Index
+				// 404
 			}
-		}
-		else
+		});
+
+		autoRouter.all('/:controller/:action/:id', function (req, res)
 		{
-			// 404
-		}
-	});
+			var method = req.method.toLowerCase();
+			var controller = app.controllers[req.params.controller];
 
-	app.use('/', autoRouter);
+			if (controller != null)
+			{
+				var action = controller[method + req.params.action];
 
-	return true;
-};
+				if (action != null)
+				{
+					action(req, res);
+				}
+				else
+				{
+					// 404 or redirect to Index
+				}
+			}
+			else
+			{
+				// 404
+			}
+		});
+
+		app.use('/', autoRouter);
+
+		return true;
+	}
+}
+
+module.exports = router;
